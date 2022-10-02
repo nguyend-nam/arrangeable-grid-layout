@@ -16,10 +16,17 @@ export const ComponentListContext = createContext({
   removeComponent: (i: number) => {
     console.log(i);
   },
+  removeAllComponent: () => {},
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [componentList, setComponentList] = useState<componentObj[]>([]);
+  const [componentList, setComponentList] = useState<componentObj[]>([
+    { containerCol: 2, containerRow: 3 },
+    { containerCol: 8, containerRow: 2 },
+    { containerCol: 3, containerRow: 1 },
+    { containerCol: 2, containerRow: 2 },
+    { containerCol: 1, containerRow: 1 },
+  ]);
 
   // add util for context
   const addComponent = (newComp: componentObj) => {
@@ -36,9 +43,19 @@ function MyApp({ Component, pageProps }: AppProps) {
     setComponentList(newArr);
   };
 
+  const removeAllComponent = () => {
+    const newArr: componentObj[] = [];
+    setComponentList(newArr);
+  };
+
   return (
     <ComponentListContext.Provider
-      value={{ componentList, addComponent, removeComponent }}
+      value={{
+        componentList,
+        addComponent,
+        removeComponent,
+        removeAllComponent,
+      }}
     >
       <Component {...pageProps} />
     </ComponentListContext.Provider>

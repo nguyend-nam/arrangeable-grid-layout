@@ -56,18 +56,25 @@ interface Props {
   containerCol: number;
   containerRow?: number;
   index: any;
+  remove: any;
 }
 
 export const GridComponent = ({
   containerCol = 3,
   containerRow = 1,
   index,
+  remove,
 }: Props) => {
   return (
     <div
       className={`col-span-${containerCol} row-span-${containerRow} bg-blue-600 text-white p-2 rounded-lg font-semibold text-lg`}
     >
-      {index}
+      <div className="flex justify-between items-center text-lg">
+        <span>{index}</span>
+        <button onClick={remove} className="font-bold text-2xl">
+          &#215;
+        </button>
+      </div>
     </div>
   );
 };

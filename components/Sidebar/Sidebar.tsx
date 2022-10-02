@@ -2,9 +2,11 @@ import {
   createRef,
   Dispatch,
   SetStateAction,
+  useContext,
   useEffect,
   useState,
 } from "react";
+import { ComponentListContext } from "../../pages/_app";
 
 interface Props {
   col?: number;
@@ -19,6 +21,9 @@ export const Sidebar = ({ col, row, setCol, setRow, addComponent }: Props) => {
   const [rowBuffer, setRowBuffer] = useState<number>();
   const colBufferRef = createRef<HTMLInputElement>();
   const rowBufferRef = createRef<HTMLInputElement>();
+
+  const { componentList, removeAllComponent } =
+    useContext(ComponentListContext);
 
   useEffect(() => {
     if (row && col && row >= 1 && row <= 5 && col >= 1 && col <= 12) {
@@ -93,6 +98,15 @@ export const Sidebar = ({ col, row, setCol, setRow, addComponent }: Props) => {
           Add component
         </button>
       </form>
+      <button
+        type="submit"
+        className="rounded-lg bg-blue-600 p-2 text-white cursor-pointer mt-2"
+        onClick={() => {
+          if (componentList.length !== 0) removeAllComponent();
+        }}
+      >
+        Remove all component(s)
+      </button>
     </div>
   );
 };

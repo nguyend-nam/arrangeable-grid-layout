@@ -3,7 +3,7 @@ import { ComponentListContext, componentObj } from "../../pages/_app";
 import { useContext } from "react";
 
 export const GridLayout = () => {
-  const { componentList } = useContext(ComponentListContext);
+  const { componentList, removeComponent } = useContext(ComponentListContext);
   return (
     <div className="grid grid-cols-12 grid-rows-5 h-screen gap-1">
       {componentList.map((o: componentObj, i: number) => (
@@ -12,6 +12,7 @@ export const GridLayout = () => {
           containerRow={o.containerRow}
           index={i}
           key={i}
+          remove={() => removeComponent(i)}
         />
       ))}
     </div>
