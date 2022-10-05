@@ -17,6 +17,7 @@ export const ComponentListContext = createContext({
     console.log(i);
   },
   removeAllComponent: () => {},
+  setComponentList: undefined as any,
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -55,6 +56,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         addComponent,
         removeComponent,
         removeAllComponent,
+        setComponentList,
       }}
     >
       <Component {...pageProps} />
