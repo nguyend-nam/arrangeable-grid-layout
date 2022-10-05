@@ -1,7 +1,9 @@
 import { useContext, useState } from "react";
 import { GridLayout } from "../components/GridLayout";
 import { Sidebar } from "../components/Sidebar";
+import SidebarList from "../components/Sidebar/SidebarList";
 import { ComponentListContext, componentObj } from "./_app";
+import { arrayMoveImmutable } from "array-move";
 
 const Home = () => {
   const [col, setCol] = useState<number>();
@@ -9,7 +11,19 @@ const Home = () => {
 
   const contextValue = useContext(ComponentListContext);
 
-  const { componentList, addComponent, removeComponent } = contextValue;
+  const { addComponent, setComponentList } = contextValue;
+
+  const onSortEnd = ({
+    oldIndex,
+    newIndex,
+  }: {
+    oldIndex: any;
+    newIndex: any;
+  }) => {
+    setComponentList((prevItem: componentObj[]) =>
+      arrayMoveImmutable(prevItem, oldIndex, newIndex)
+    );
+  };
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -23,26 +37,7 @@ const Home = () => {
             addComponent={addComponent}
           />
         </div>
-        <div className="p-3">
-          {componentList.length !== 0 &&
-            componentList.map((c: componentObj, i: number) => (
-              <div className="shadow-md p-2 rounded-xl mb-2 bg-white" key={i}>
-                <div className="flex justify-between items-center text-lg">
-                  <span className="text-blue-600">{i}</span>
-                  <button
-                    onClick={() => removeComponent(i)}
-                    className="text-blue-600 font-bold text-2xl"
-                  >
-                    &#215;
-                  </button>
-                </div>
-                <ul className="font-light">
-                  <li>Column span: {c.containerCol}</li>
-                  <li>Row span: {c.containerRow}</li>
-                </ul>
-              </div>
-            ))}
-        </div>
+        <SidebarList onSortEnd={onSortEnd} />
       </div>
       <div className="w-full border-gray-200 p-1">
         <GridLayout />
